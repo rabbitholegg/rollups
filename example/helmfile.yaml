@@ -1,0 +1,45 @@
+repositories:
+  - name: boost-rollups
+    url: https://rabbitholegg.github.io/rollups/
+  - name: ethereum-helm-charts
+    url: https://ethpandaops.github.io/ethereum-helm-charts
+
+releases:
+  - name: op-geth
+    namespace: op-stack-goerli
+    chart: boost-rollups/op-geth
+    values:
+      - ./values/op-geth.yaml
+  - name: op-node
+    namespace: op-stack-goerli
+    chart: boost-rollups/op-node
+    values:
+      - ./values/op-node.yaml
+  - name: op-proposer
+    namespace: op-stack-goerli
+    chart: boost-rollups/op-proposer
+    values:
+      - ./values/op-proposer.yaml
+  - name: op-batcher
+    namespace: op-stack-goerli
+    chart: boost-rollups/op-batcher
+    values:
+      - ./values/op-batcher.yaml
+  - name: blockscout
+    namespace: op-stack-goerli
+    chart: ethereum-helm-charts/blockscout
+    values:
+      - ./values/blockscout.yaml
+  - name: op-node-configmaps
+    namespace: op-stack-goerli
+    chart: main/raw
+    values:
+      - templates:
+          - |
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: op-node-configmaps
+            data:
+              rollup.json: |
+                {}
